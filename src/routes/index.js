@@ -1,0 +1,18 @@
+const express = require('express');
+const upload = require('../middlewares/upload');
+const userController = require('../controllers/user-controller');
+const applicationController = require('../controllers/application-controller');
+const jobController = require('../controllers/job-controller');
+const verifyAlumni = require('../middlewares/verifyAlumini');
+const auth = require('../middlewares/auth');
+const router = express.Router();
+router.post('/register',upload.single('profilePicture'),userController.registerUser);
+router.post('/login',userController.loginUser);
+router.post('/post',auth.Auth,verifyAlumni.verifyAlumni,jobController.postJob);
+router.get('/applied',auth.Auth,jobController.getUserAppliedJobs);
+router.get('/:jobId/applicants',auth.Auth,jobController.getJobApplicants);
+router.get('/all',jobController.getAllJobs);
+router.get('/:jobid',jobController.getJobById);
+router.post('/apply',auth.Auth,applicationController.applyForJob);
+router.put('/modify',applicationController.updateApplicationStatus);
+module.exports = router;
