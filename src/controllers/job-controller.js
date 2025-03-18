@@ -1,6 +1,6 @@
 const Job = require("../models/job");
-const user = require("../models/user");
-// ✅ POST a Job (Only Alumni can post)
+const user = require("../models/User");
+// POST a Job (Only Alumni can post)
 const postJob = async (req, res) => {
   try {
     const { title, description, about, company, location, salaryRange, employmentType, category, skillsRequired, experienceLevel, applicationDeadline } = req.body;
