@@ -9,6 +9,7 @@ const blogSchema = new mongoose.Schema({
     likes: { type: Number, default: 0 },
     comments: [{ user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, comment: String, date: { type: Date, default: Date.now } }],
     date: { type: Date, default: Date.now },
+    savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   });
   module.exports = mongoose.model("Blog",blogSchema);
   

@@ -9,6 +9,7 @@ const auth = require('../middlewares/auth');
 const donationDashboard = require('../controllers/donation-dashboard-controller');
 const donationController = require('../controllers/donation-controller');
 const blogController = require('../controllers/blog-controller');
+const blogsDashboard = require('../controllers/blogs-dashboard-controller');
 const router = express.Router();
 router.post('/register',upload.single('profilePicture'),userController.registerUser);
 router.post('/login',userController.loginUser);
@@ -32,4 +33,9 @@ router.put('/modifyBlog',blogController.updateBlog);
 router.post('/:id/like',blogController.likeBlog);
 router.post('/:id/comment',blogController.addComment);
 router.delete('/:id',blogController.deleteBlog);
+router.post('/:id/save',blogController.saveBlog);
+
+
+
+router.get('/blogDashboard',auth.Auth,blogsDashboard.getDashboardStats);
 module.exports = router;

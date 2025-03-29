@@ -88,6 +88,26 @@ const addComment = async(req,res)=>{
       }
 };
 
+const saveBlog = async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id);
+    if (!blog) return res.status(404).json({ error: "Blog not found" });
+
+    const userId = req.body.userId;
+    if (blog.savedBy.includes(userId)) {
+      // If already saved, remove from saved
+      blog.savedBy = blog.savedBy.filter(id => id.toString() !== userId);
+    } else {
+      // Else, add to saved
+      blog.savedBy.push(userId);
+    }
+    await blog.save();
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(500).json({ error: "Error saving blog" });
+  }
+};
+
 module.exports = {
 createBlog,
 getAllBlogs,
@@ -95,5 +115,6 @@ getblogbyid,
 deleteBlog,
 updateBlog,
 addComment,
-likeBlog
+likeBlog,
+saveBlog
 };
