@@ -10,7 +10,9 @@ const donationDashboard = require('../controllers/donation-dashboard-controller'
 const donationController = require('../controllers/donation-controller');
 const blogController = require('../controllers/blog-controller');
 const blogsDashboard = require('../controllers/blogs-dashboard-controller');
+const messageController = require('../controllers/message-controller');
 const router = express.Router();
+const Messageupload = require('../middlewares/messageupload');
 router.post('/register',upload.single('profilePicture'),userController.registerUser);
 router.post('/login',userController.loginUser);
 router.post('/post',auth.Auth,verifyAlumni.verifyAlumni,jobController.postJob);
@@ -38,4 +40,11 @@ router.post('/:id/save',blogController.saveBlog);
 
 
 router.get('/blogDashboard',auth.Auth,blogsDashboard.getDashboardStats);
+
+
+
+router.post('/send',auth.Auth,Messageupload.single('file'),messageController.sendMessage);
+router.get('/messages/:userId',auth.Auth,messageController.getMessages);
+router.get('/unread',auth.Auth,messageController.getUnreadCount);
+router.get('/contacts',auth.Auth,messageController.getContacts);
 module.exports = router;
